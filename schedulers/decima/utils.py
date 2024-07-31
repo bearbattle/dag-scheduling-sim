@@ -94,8 +94,8 @@ def obs_to_pyg(obs: dict[str, Any]) -> pyg.data.Batch:
 
     dag_batch = pyg.data.Batch(
         x=torch.from_numpy(obs_dag_batch.nodes),
-        edge_index=torch.from_numpy(obs_dag_batch.edge_links.T),
-        ptr=torch.from_numpy(ptr),
+        edge_index=torch.from_numpy(obs_dag_batch.edge_links.T).long(),
+        ptr=torch.from_numpy(ptr).long(),
         batch=torch.from_numpy(
             np.repeat(np.arange(num_active_jobs), num_nodes_per_dag)
         ),
