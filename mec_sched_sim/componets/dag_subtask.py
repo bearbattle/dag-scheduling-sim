@@ -1,5 +1,8 @@
 from dataclasses import dataclass
 
+from .node import Node
+from .resource import ResourceList
+
 import numpy as np
 
 
@@ -10,6 +13,10 @@ class Subtask:
     node_id: int | None = None
     t_assigned: float = np.inf
     t_completed: float = np.inf
+
+    # resource_req: tuple[int, int] = (CPU, RAM)
+    # Can extend this to include other resources
+    resource_req: ResourceList = None
 
     @property
     def __unique_id(self) -> tuple[int, int]:
@@ -29,5 +36,9 @@ class Subtask:
             return False
 
     def assign_node(self, node: Node, t: float) -> None:
+        if self.assigned:
+            raise ValueError("Subtask already assigned to a node")
+        if not node.add_subtask(t, self):
+            raise ValueError("Node cannot accept subtask")
         self.node_id = node.id_
         self.t_assigned = t

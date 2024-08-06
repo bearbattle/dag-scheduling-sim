@@ -10,6 +10,7 @@ class Event:
         DAG_ARRIVAL = auto()
         DAG_SUBTASK_ASSIGNED = auto()
         DAG_FINISHED = auto()
+        DAG_SUBTASK_RESIGNED = auto()
 
     type: Type
 
